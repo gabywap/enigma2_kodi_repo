@@ -65,19 +65,16 @@ http://gosathu.nhely.hu/Enigma2_KODI_install_movieshark_repo_Hungary.sh \
 -O - | /bin/sh
 📌 One-line copyable version:
 
-sh
-Kód másolása
+
 wget -q "--no-check-certificate" http://gosathu.nhely.hu/Enigma2_KODI_install_movieshark_repo_Hungary.sh -O - | /bin/sh
 🌐 Sources
 🔗 Kodi repository hub
 
-arduino
-Kód másolása
+
 http://kodirepo.nhely.hu/
 🔗 sources.xml
 
-arduino
-Kód másolása
+
 http://gosathu.nhely.hu/sources.xml
 🛠 Requirements
 Enigma2-based image
@@ -88,7 +85,7 @@ Working opkg
 
 Image containing:
 
-Kód másolása
+
 enigma2-plugin-extensions-kodi
 ℹ️ Important Notes
 Script uses ASCII-only output for proper display over telnet
