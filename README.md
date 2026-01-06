@@ -1,86 +1,117 @@
-# enigma2_kodi_repo
-enigma2 kodi repo script
+# 🎬 Enigma2 – Kodi automatikus telepítő és magyar REPO beállító script
 
-📺 Enigma2 – Kodi automatikus telepítő script (Magyar repo támogatással)
+Ez a shell script **Enigma2 alapú beltéri egységeken** automatizálja a **Kodi telepítését**, valamint a **magyar Kodi repository-k és források (sources.xml)** beállítását.
 
-Ez a script Enigma2 alapú set-top boxokon automatikusan telepíti a Kodi médialejátszót, amennyiben az adott image tárolójában elérhető a Kodi csomag.
+A cél egy **gyors, biztonságos és egységes Kodi környezet** létrehozása friss Enigma2 telepítés után.
 
-A telepítés során a script:
+---
 
-feltelepíti a Kodi-t,
+## ✨ Funkciók
 
-2 magyar Kodi repository ZIP-et telepít,
+- ✅ Ellenőrzi, hogy a **Kodi elérhető-e** az adott image csomagtárolójában  
+- ✅ Automatikusan **telepíti a Kodi-t**
+- ✅ Ellenőrzi a meglévő **Kodi userdata mappát**
+- ✅ Letölti és beállítja a **sources.xml** fájlt
+- ✅ Letölti a **magyar Kodi repository ZIP-eket**
+- ✅ Elhelyezi őket az `/etc/enigma2` könyvtárban
+- ✅ Hiba esetén **leáll**, nem fut végig feleslegesen
+- ✅ A végén **újraindítja az Enigma2 felületet**
 
-létrehoz / frissít egy sources.xml fájlt a Kodi userdata mappában,
+---
 
-hozzáad 2 magyar repo forrást, valamint egy saját kodirepo tárhelyet, ahová később több repository kerül feltöltésre.
+## 📦 Telepített Kodi repository-k
 
-Így a Kodi-ban a repók és kiegészítők egyszerűen, egy forrásból telepíthetők.
+A script jelenleg az alábbi magyar repository-kat tölti le:
 
-✅ Főbb funkciók
+- `repository.movieshark-2.7.2.zip`
+- `repository.streamshark-1.0.1.zip`
 
-✔ Kodi automatikus telepítése Enigma2-n
+📂 Elérési út:
+/etc/enigma2/
 
-✔ Magyar Kodi repository ZIP-ek telepítése
+yaml
+Kód másolása
 
-✔ Előre konfigurált sources.xml
+A ZIP-ek a Kodi-ban **„Install from ZIP file”** menüpontból telepíthetők.
 
-✔ Saját Kodi repo tárhely használata
+---
 
-✔ Telnetes, egyparancsos futtatás
+## 📁 Kodi userdata mappa kezelése
 
-✔ Image-független (ha van Kodi a feedben)
+A script **nem hoz létre userdata mappát**, csak ellenőrzi a meglévőt.
 
-🔧 Telepítés (ajánlott – Telnet / SSH)
+Elsődlegesen használt útvonal:
+/media/hdd/.kodi/userdata
 
-Lépj be az Enigma2 eszközre telneten vagy SSH-n, majd futtasd az alábbi parancsot:
+Kód másolása
 
+Másodlagos útvonal:
+/home/root/.kodi/userdata
+
+yaml
+Kód másolása
+
+⚠️ Ha egyik sem létezik:
+> Indítsd el egyszer a Kodi-t, majd futtasd újra a scriptet.
+
+Ez biztosítja, hogy a Kodi már inicializálva legyen.
+
+---
+
+## ▶️ Telepítés (Telnet / SSH)
+
+A script **közvetlenül futtatható**, letöltés nélkül:
+
+```sh
+wget -q "--no-check-certificate" \
+http://gosathu.nhely.hu/Enigma2_KODI_install_movieshark_repo_Hungary.sh \
+-O - | /bin/sh
+📌 Másolható, egy soros verzió:
+
+sh
+Kód másolása
 wget -q "--no-check-certificate" http://gosathu.nhely.hu/Enigma2_KODI_install_movieshark_repo_Hungary.sh -O - | /bin/sh
+🌐 Használt források
+🔗 Kodi repository tárhely
 
-
-A script automatikusan lefut, nincs szükség további beavatkozásra.
-
-📦 Használt Kodi repository tárhely
-
-Saját Kodi repo tárhely (forrásként használható):
-
+arduino
+Kód másolása
 http://kodirepo.nhely.hu/
+🔗 sources.xml
 
+arduino
+Kód másolása
+http://gosathu.nhely.hu/sources.xml
+🛠 Követelmények
+Enigma2 alapú image
 
-Forrásként használható sources.xml fájl:
+Internetkapcsolat
 
-http://kodirepo.nhely.hu/repo/sources.xml
+Működő opkg
 
-🔁 Csak sources.xml használata (opcionális)
+Az image tartalmazza az alábbi csomagot:
 
-Ha csak a Kodi forrásokat szeretnéd hozzáadni (Kodi már telepítve van), akkor az alábbi parancsokkal külön is letölthető a sources.xml.
-
-📍 Belső flash tárhely esetén:
-wget -O /home/root/.kodi/userdata/sources.xml http://gosathu.nhely.hu/sources.xml
-
-📍 USB pendrive / HDD (Kodi ezt hdd-nek látja):
-wget -O /media/hdd/.kodi/userdata/sources.xml http://gosathu.nhely.hu/sources.xml
-
-📁 FTP használata (kézi másolás)
-
-Ha valaki FTP-n keresztül szeretné bemásolni a fájlt, ide kell elhelyezni:
-
-🔹 Belső flash:
-/home/root/.kodi/userdata/sources.xml
-
-🔹 USB / HDD:
-/media/hdd/.kodi/userdata/sources.xml
-
+Kód másolása
+enigma2-plugin-extensions-kodi
 ℹ️ Fontos megjegyzések
+A script ékezetmentes kimenetet használ, telneten minden boxon jól olvasható
 
-A script nem módosít image-specifikus beállításokat
+BusyBox sh kompatibilis
 
-Kodi csak akkor települ, ha elérhető az adott image csomagtárolójában
+Biztonságos: hiba esetén azonnal kilép
 
-A repo tárhely bővíthető, később további repository ZIP-ek kerülnek fel
+A futás végén újraindítja az Enigma2 felületet
 
-A forrás egy helyen kezelhető, egyszerű karbantartással
+👤 Szerző
+Gabywap
+📦 Verzió: 2.2
+📅 Dátum: 2026.01.05
 
-🎉 Jó használatot!
+☕ Zárás
+A script szabadon használható, bővíthető.
+A kodirepo tárhely később további Kodi repository-kkal is bővíthető.
 
-Ha hibát találsz, vagy bővítenéd a megoldást (pl. új repo, új image támogatás), a projekt később GitHubon is bővíthető lesz.
+Jó használatot! 🎥📺
+
+markdown
+Kód másolása
