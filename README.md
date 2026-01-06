@@ -29,8 +29,7 @@ A script jelenleg az alábbi magyar repository-kat tölti le:
 📂 Elérési út:
 /etc/enigma2/
 
-yaml
-Kód másolása
+
 
 A ZIP-ek a Kodi-ban **„Install from ZIP file”** menüpontból telepíthetők.
 
@@ -43,13 +42,12 @@ A script **nem hoz létre userdata mappát**, csak ellenőrzi a meglévőt.
 Elsődlegesen használt útvonal:
 /media/hdd/.kodi/userdata
 
-Kód másolása
+
 
 Másodlagos útvonal:
 /home/root/.kodi/userdata
 
-yaml
-Kód másolása
+
 
 ⚠️ Ha egyik sem létezik:
 > Indítsd el egyszer a Kodi-t, majd futtasd újra a scriptet.
@@ -68,19 +66,16 @@ http://gosathu.nhely.hu/Enigma2_KODI_install_movieshark_repo_Hungary.sh \
 -O - | /bin/sh
 📌 Másolható, egy soros verzió:
 
-sh
-Kód másolása
+```sh
 wget -q "--no-check-certificate" http://gosathu.nhely.hu/Enigma2_KODI_install_movieshark_repo_Hungary.sh -O - | /bin/sh
 🌐 Használt források
 🔗 Kodi repository tárhely
 
-arduino
-Kód másolása
+
 http://kodirepo.nhely.hu/
 🔗 sources.xml
 
-arduino
-Kód másolása
+
 http://gosathu.nhely.hu/sources.xml
 🛠 Követelmények
 Enigma2 alapú image
@@ -91,7 +86,7 @@ Működő opkg
 
 Az image tartalmazza az alábbi csomagot:
 
-Kód másolása
+
 enigma2-plugin-extensions-kodi
 ℹ️ Fontos megjegyzések
 A script ékezetmentes kimenetet használ, telneten minden boxon jól olvasható
@@ -113,5 +108,4 @@ A kodirepo tárhely később további Kodi repository-kkal is bővíthető.
 
 Jó használatot! 🎥📺
 
-markdown
-Kód másolása
+
