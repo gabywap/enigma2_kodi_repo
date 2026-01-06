@@ -60,7 +60,7 @@ Ez biztosítja, hogy a Kodi már inicializálva legyen.
 
 A script **közvetlenül futtatható**, letöltés nélkül:
 
-```sh
+
 wget -q "--no-check-certificate" \
 http://gosathu.nhely.hu/Enigma2_KODI_install_movieshark_repo_Hungary.sh \
 -O - | /bin/sh
