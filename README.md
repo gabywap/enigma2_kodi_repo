@@ -1,160 +1,133 @@
 # Enigma2 – Kodi automatikus telepítő és magyar repository beállító script
 
-Ez a script **Enigma2 alapú set-top boxokon** automatikusan telepíti a **Kodi médialejátszót**, majd beállítja a szükséges **magyar Kodi repository-kat** és a `sources.xml` fájlt.
+Ez a script Enigma2 alapú set-top boxokon automatikusan telepíti a Kodi médialejátszót, majd beállítja a szükséges magyar Kodi repository-kat és a `sources.xml` fájlt.
 
-A script **image-független**, amennyiben az adott Enigma2 image csomagtárolójában elérhető a Kodi.
+A script image-független, amennyiben az adott Enigma2 image csomagtárolójában elérhető a Kodi (csomag neve: `enigma2-plugin-extensions-kodi`).
 
 ---
 
 ## 📌 Fő funkciók
 
-- ✔ Ellenőrzi, hogy a Kodi elérhető-e az image repository-jában  
-- ✔ Automatikusan telepíti a Kodi-t (`opkg`)  
-- ✔ Ellenőrzi a Kodi `userdata` mappát (belső flash vagy HDD)  
-- ✔ Letölti és beállítja a `sources.xml` fájlt  
-- ✔ Letölti a magyar Kodi repository ZIP-eket  
-- ✔ Elhelyezi a ZIP-eket az `/etc/enigma2` könyvtárban  
-- ✔ A script saját magát bemásolja az `/usr/script` könyvtárba  
-- ✔ Enigma2 újraindítással zárja a folyamatot  
+- Ellenőrzi, hogy a Kodi elérhető-e az image repository-jában  
+- Automatikusan telepíti a Kodi-t (`opkg`)  
+- Ellenőrzi a Kodi `userdata` mappáját (belső flash vagy HDD)  
+- Letölti és beállítja a `sources.xml` fájlt a Kodi userdata könyvtárába  
+- Letölti a magyar Kodi repository ZIP-eket és az `/etc/enigma2` könyvtárba helyezi őket  
+- A script önmagát bemásolja az `/usr/script` könyvtárba (telepített példány)  
+- A folyamat végén újraindítja az Enigma2-t
 
 ---
 
 ## 🧰 Követelmények
 
-- Enigma2 alapú rendszer
-- Internet kapcsolat
-- `opkg` csomagkezelő
-- Olyan image, amely tartalmazza a Kodi csomagot:
-enigma2-plugin-extensions-kodi
-
-yaml
-Kód másolása
+- Enigma2 alapú rendszer  
+- Internet kapcsolat  
+- `opkg` csomagkezelő  
+- Az image tartalmazza a Kodi csomagot: `enigma2-plugin-extensions-kodi`
 
 ---
 
 ## 🚀 Gyors telepítés (ajánlott)
 
-Futtasd **telneten vagy SSH-n** az alábbi parancsot:
+Futtasd telneten vagy SSH-n a következő parancsot:
 
 ```sh
-wget -q "--no-check-certificate" http://gosathu.nhely.hu/Enigma2_KODI_install_movieshark_repo_Hungary.sh -O - | /bin/sh
-📂 Mit csinál pontosan a script?
-1️⃣ Feed frissítés
-sh
-Kód másolása
+wget -q --no-check-certificate http://gosathu.nhely.hu/Enigma2_KODI_install_movieshark_repo_Hungary.sh -O - | /bin/sh
+```
+
+---
+
+## Mit csinál pontosan a script?
+
+1. Feed frissítés
+```sh
 opkg update
-2️⃣ Script öntelepítés
+```
+
+2. Script öntelepítése  
 A script letölti saját magát, majd bemásolja ide:
-
-text
-Kód másolása
+```
 /usr/script/Enigma2_KODI_install_movieshark_repo_Hungary.sh
+```
 Jogosultság beállítása:
-
-sh
-Kód másolása
+```sh
 chmod 755 /usr/script/Enigma2_KODI_install_movieshark_repo_Hungary.sh
+```
 Ez biztosítja, hogy frissítés esetén mindig az új verzió fusson.
 
-3️⃣ Kodi elérhetőség ellenőrzése
-Ha a Kodi nem elérhető az adott image repository-jában, a script leáll:
-
-text
-Kód másolása
+3. Kodi elérhetőségének ellenőrzése  
+Ha a Kodi nem érhető el az adott image repository-jában, a script leáll és hibaüzenetet ad:
+```
 HIBA: Kodi nem érhető el ebben az image-ben!
-4️⃣ Kodi telepítése
-sh
-Kód másolása
+```
+
+4. Kodi telepítése
+```sh
 opkg install enigma2-plugin-extensions-kodi
+```
 Sikertelenség esetén a script megszakad.
 
-5️⃣ Kodi userdata mappa ellenőrzése
-A script nem hoz létre mappát, csak ellenőriz:
+5. Kodi userdata mappa ellenőrzése  
+A script nem hoz létre userdata mappát, csak ellenőrzi az alábbi prioritás szerint:
+- HDD: `/media/hdd/.kodi/userdata`
+- Belső flash: `/home/root/.kodi/userdata`
 
-Elsőbbségi sorrend:
+Ha egyik sem létezik, a Kodi még nem lett elindítva. Indítsd el egyszer a Kodi-t, majd futtasd újra a scriptet.
 
-HDD:
-
-text
-Kód másolása
-/media/hdd/.kodi/userdata
-Belső flash:
-
-text
-Kód másolása
-/home/root/.kodi/userdata
-⚠ Ha egyik sem létezik:
-
-a Kodi még nem lett elindítva
-
-a script leáll
-
-indítsd el egyszer a Kodi-t, majd futtasd újra a scriptet
-
-6️⃣ sources.xml beállítása
-A következő fájl kerül letöltésre:
-
-text
-Kód másolása
-http://gosathu.nhely.hu/sources.xml
-Ide másolva:
-
-text
-Kód másolása
+6. `sources.xml` beállítása  
+A script letölti a `sources.xml` fájlt:
+- Forrás: [http://gosathu.nhely.hu/sources.xml](http://gosathu.nhely.hu/sources.xml)  
+A fájlt a Kodi userdata könyvtárába másolja:  
+```
 .kodi/userdata/sources.xml
-A fájl tartalmazza:
+```
+A fájl tartalmazza a magyar Kodi repo-kat és opcionálisan saját repo-tárhely beállítást.
 
-magyar Kodi repo-kat
-
-saját Kodi repo tárhelyet
-
-7️⃣ Magyar Kodi repository ZIP-ek
-Letöltött ZIP-ek:
-
+7. Magyar Kodi repository ZIP-ek letöltése és elhelyezése  
+Letöltött ZIP-ek (példák):
+```
 repository.movieshark-2.7.2.zip
-
 repository.streamshark-1.0.1.zip
-
+```
 Célkönyvtár:
-
-text
-Kód másolása
+```
 /etc/enigma2/
-Ezeket Kodi-ból ZIP fájlból telepítés módszerrel lehet felvenni.
+```
+Ezeket a Kodi-ban a "Install from zip" (ZIP telepítés) módszerrel lehet felvenni.
 
-8️⃣ Enigma2 újraindítása
-A telepítés végén a rendszer újraindul:
-
-sh
-Kód másolása
+8. Enigma2 újraindítása
+A telepítési folyamat végén a rendszer újraindul:
+```sh
 killall enigma2
-🌐 Használt linkek
-Script:
+```
 
-arduino
-Kód másolása
-http://gosathu.nhely.hu/Enigma2_KODI_install_movieshark_repo_Hungary.sh
-Kodi repo tárhely:
+---
 
-arduino
-Kód másolása
-http://kodirepo.nhely.hu/
-ℹ️ Verzió információ
-Verzió: 2.2
+## 🌐 Használt linkek
 
-Dátum: 2026.01.05
+- Script: [Enigma2_KODI_install_movieshark_repo_Hungary.sh](http://gosathu.nhely.hu/Enigma2_KODI_install_movieshark_repo_Hungary.sh)  
+- Kodi repo tárhely: [http://kodirepo.nhely.hu/](http://kodirepo.nhely.hu/)  
+- sources.xml: [http://gosathu.nhely.hu/sources.xml](http://gosathu.nhely.hu/sources.xml)
 
-Készítette: Gabywap
+---
 
-⚠️ Megjegyzés
-Ez a script nem módosít image specifikus beállításokat, kizárólag:
+## ℹ️ Verzió információ
 
-Kodi telepítés
+- Verzió: 2.2  
+- Dátum: 2026-01-05  
+- Készítette: Gabywap (gabywap)
 
-Kodi userdata konfigurálás
+---
 
-repository előkészítés
+## ⚠️ Megjegyzések és biztonság
 
-Használata saját felelősségre történik.
+- A script nem módosít image-specifikus beállításokat — csak:
+  - Kodi telepítést  
+  - Kodi userdata konfigurálást  
+  - Repository előkészítést
+- A script futtatása saját felelősségre történik.  
+- Ellenőrizd a letöltött forrásokat és a script tartalmát, ha nem ismered vagy nem bízol a hosztban.
 
-✅ Jó szórakozást és jó Kodi használatot!
+---
+
+Kellemes Kodi használatot és jó szórakozást!
