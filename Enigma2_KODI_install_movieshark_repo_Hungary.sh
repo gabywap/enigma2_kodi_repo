@@ -85,12 +85,14 @@ echo
 echo ">> Csomagtarolok frissitese..."
 opkg update
 echo
+###############################################################################
+## 2. Script letoltese & telepitese /usr/script ala
+###############################################################################
+
 echo "=============================="
 echo " KODI movieshark repo installer"
 echo "=============================="
 echo
-
-# --- Script letoltese & telepitese /usr/script ala ---
 
 echo "KODI movieshark - repo script letoltese!"
 echo
@@ -108,7 +110,7 @@ echo
 chmod 755 /usr/script/$KODISCRIPT
 echo
 ###############################################################################
-## 2. Kodi elérhetőség ellenőrzése
+## 3. Kodi elérhetőség ellenőrzése
 ###############################################################################
 echo ">> Kodi ellenorzese a repository-ban..."
 if ! opkg info "$KODI_PKG" >/dev/null 2>&1 ; then
@@ -119,7 +121,7 @@ echo "OK: Kodi elerheto."
 echo
 
 ###############################################################################
-## 3. Kodi telepítése
+## 4. Kodi telepítése
 ###############################################################################
 echo ">> Kodi telepitese..."
 if ! opkg install "$KODI_PKG"; then
@@ -130,7 +132,7 @@ echo "OK: Kodi telepitve."
 echo
 
 ###############################################################################
-## 4. Kodi userdata ellenőrzése
+## 5. Kodi userdata ellenőrzése
 ###############################################################################
 if [ -d "/media/hdd/.kodi/userdata" ]; then
     KODI_USERDATA="/media/hdd/.kodi/userdata"
@@ -146,7 +148,7 @@ fi
 echo
 
 ###############################################################################
-## 5. sources.xml letöltése
+## 6. sources.xml letöltése
 ###############################################################################
 echo ">> sources.xml beallitasa..."
 if ! wget -O "$KODI_USERDATA/sources.xml" "$SOURCES_URL"; then
@@ -157,7 +159,7 @@ echo "OK: sources.xml kesz elhelyezve."
 echo
 
 ###############################################################################
-## 6. Repository ZIP-ek letöltése
+## 7. Repository ZIP-ek letöltése
 ###############################################################################
 echo ">> Repository ZIP-ek letoltese..."
 wget -O "/tmp/$MREPO_ZIP" "$MREPO_URL"
@@ -171,7 +173,7 @@ echo "OK: ZIP-ek letoltve."
 echo
 
 ###############################################################################
-## 7. ZIP-ek másolása
+## 8. ZIP-ek másolása
 ###############################################################################
 cp -f "/tmp/$MREPO_ZIP" /etc/enigma2/
 cp -f "/tmp/$SREPO_ZIP" /etc/enigma2/
@@ -182,7 +184,7 @@ echo "OK: Repository ZIP-ek elhelyezve."
 echo
 
 ###############################################################################
-## 8. Enigma2 újraindítása
+## 9. Enigma2 újraindítása
 ###############################################################################
 echo "Telepites kesz. Enigma2 Ujrainditasa..."
 sleep 3
