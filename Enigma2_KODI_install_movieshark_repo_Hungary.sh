@@ -68,6 +68,8 @@ KODI_PKG="enigma2-plugin-extensions-kodi"
 SOURCES_URL="http://gosathu.nhely.hu/sources.xml"
 MREPO_URL="http://gosathu.nhely.hu/repository.movieshark-2.7.2.zip"
 SREPO_URL="http://gosathu.nhely.hu/repository.streamshark-1.0.1.zip"
+KODISCRIPT="Enigma2_KODI_install_movieshark_repo_Hungary.sh"
+KODI="http://gosathu.nhely.hu/Enigma2_KODI_install_movieshark_repo_Hungary.sh"
 
 MREPO_ZIP="repository.movieshark-2.7.2.zip"
 SREPO_ZIP="repository.streamshark-1.0.1.zip"
@@ -83,7 +85,28 @@ echo
 echo ">> Csomagtarolok frissitese..."
 opkg update
 echo
+echo "=============================="
+echo " KODI movieshark repo installer"
+echo "=============================="
+echo
 
+# --- Script letoltese & telepitese /usr/script ala ---
+
+echo "KODI movieshark - repo script letoltese!"
+echo
+
+wget -O /tmp/$KODISCRIPT $KODI
+echo
+echo "$KODISCRIPT letoltese kesz"
+echo
+
+cp -pr /tmp/$KODISCRIPT /usr/script/$KODISCRIPT
+echo
+echo "$KODISCRIPT /usr/script masolasa kesz"
+echo
+
+chmod 755 /usr/script/$KODISCRIPT
+echo
 ###############################################################################
 ## 2. Kodi elérhetőség ellenőrzése
 ###############################################################################
