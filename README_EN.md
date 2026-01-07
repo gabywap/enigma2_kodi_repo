@@ -1,3 +1,7 @@
+![Enigma2](https://img.shields.io/badge/Platform-Enigma2-blue.svg)
+![Kodi](https://img.shields.io/badge/Supported-Kodi-brightgreen.svg)
+![Version](https://img.shields.io/badge/Version-2.2-yellow.svg)
+
 # Enigma2 – Automatic Kodi Installer and Hungarian Repository Setup Script
 
 This script automatically installs the **Kodi media player** on **Enigma2-based set-top boxes** and sets up the required **Hungarian Kodi repositories** along with the `sources.xml` file.
